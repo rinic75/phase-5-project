@@ -1,0 +1,41 @@
+
+
+/* Form elements */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input,
+select {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Add some extra styling when inputs are focused */
+input:focus,
+select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Submit button */
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Add some extra styling when the button is hovered */
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}

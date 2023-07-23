@@ -1,23 +1,46 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import {Routes, Route} from 'react-router-dom';
+// import { useContext } from 'react';
 import './App.css';
+import Home from './component/Home';
+import NavBar from './component/NavBar';
+import ListingPage from './component/listingPage';
+
+// import { UserContext } from './UserContext';
+import MyListings from './component/MyListings';
+import EditListing from './component/EditListing';
+import NewListing from './component/NewListing';
+import Frontpage from './component/FrontPage';
+import MyMessage from './component/MyMessage';
+
+
+
 
 function App() {
+  // const {user, setUser} = useContext(UserContext);
+  const [categories, setCategories] = useState([]);
+  
+  useEffect(() => {
+    fetch("/categories")
+      .then((r) => r.json())
+      .then((data) => {
+        setCategories(data);
+      });
+  }, []);
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar />
+    
+      <Routes>
+        <Route exact path="/" element={<Frontpage />} />
+        <Route exact path="/home" element={<Home categories={categories}/>} />
+        <Route exact path="/categories/:id" element={<ListingPage />} />
+        <Route exact path="/mylistings" element={<MyListings />} />
+        <Route exact path="/editListing/:id" element={<EditListing categories={categories}/>} />
+        <Route exact path="/newlisting" element={<NewListing categories={categories}/>} />
+        <Route exact path="/mymessages" element={<MyMessage />} />
+      </Routes>
     </div>
   );
 }
