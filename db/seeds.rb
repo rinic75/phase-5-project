@@ -12,14 +12,14 @@ List.destroy_all
 Message.destroy_all
 
 
-Category.create(name: "Driver")
-Category.create(name: "Fairway")
-Category.create(name: "Hybrid")
-Category.create(name: "Iron")
-Category.create(name: "Wedge")
-Category.create(name: "Putter")
-Category.create(name: "Bag")
-Category.create(name: "Misc")
+Category.create(name: "Driver", image_Url: "https://www.tgw.com/blog-assets/wp-content/uploads/2021/03/2021-Best-Golf-Drivers-Featured.jpg")
+Category.create(name: "Fairway", image_Url: "https://golf.com/wp-content/uploads/2021/10/GettyImages-1132705407rr.jpg")
+Category.create(name: "Hybrid", image_Url: "https://southamptongolfclub.com/wp-content/uploads/2019/03/Golf-Hybrids.jpg")
+Category.create(name: "Iron", image_Url: "https://cdn.cosmicjs.com/0e627be0-d156-11eb-a3a9-058a56ece6a0-Blade-Irons-Set-Featured-Image.jpg")
+Category.create(name: "Wedge", image_Url: "https://www.golfdigest.com/content/dam/images/golfdigest/fullset/2019/01/23/5c48f01e14ab9c2d16760c20_Hot-List-2019-Wedges%20USE.jpg")
+Category.create(name: "Putter", image_Url: "https://golfweek.usatoday.com/wp-content/uploads/sites/87/2022/07/LAGP-putter-vs-traditional-blade-size.png?resize=1024,681")
+Category.create(name: "Bag", image_Url: "https://robbreport.com/wp-content/uploads/2021/12/mnmlbag01.jpg?w=1000")
+Category.create(name: "Misc", image_Url: "https://goldinauctions.com/ItemImages/000020/20669d_med.jpeg")
 
 # User.create(name: "John", email: "john@john", password: "john") - user faker instead 5 times
 User.create(name: "Chang", email: "chang@gmail.com", password: "1234", zipcode: "61874")

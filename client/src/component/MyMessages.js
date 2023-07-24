@@ -9,8 +9,6 @@ function MyMessage() {
   const messagesPerPage = 5; // Number of messages to display per page
   const [receivedMessages, setReceivedMessages] = useState([]);
   const [sentMessages, setSentMessages] = useState([]);
-  // const [selectedMessage, setSelectedMessage] = useState(null);
-  // const [replyMessage, setReplyMessage] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -32,10 +30,6 @@ function MyMessage() {
   }
 
   function handleReplyClick(message) {
-    // setSelectedMessage(message);
-    // setReplyMessage("");
-    console.log(message)
-
     navigate("/sendmessages", {
       state: {
         title: `Received Message: ${message.content}`,
@@ -45,27 +39,49 @@ function MyMessage() {
     });
   }
 
-  // Calculate the total number of pages based on the messages array length and messagesPerPage
-  const totalPages = Math.ceil(receivedMessages.length / messagesPerPage);
+  async function handleDeleteClick(messageId) {
+    try {
+      const response = await fetch(`/messages/${messageId}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete the message");
+      }
 
-  // Function to handle page change
+      // Remove the deleted message from the received messages list
+      setReceivedMessages((prevMessages) =>
+        prevMessages.filter((message) => message.id !== messageId)
+      );
+      setSentMessages((prevMessages) =>
+        prevMessages.filter((message) => message.id !== messageId)
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const totalPages = Math.ceil(receivedMessages.length / messagesPerPage);
+  const indexOfLastMessage = currentPage * messagesPerPage;
+  const indexOfFirstMessage = indexOfLastMessage - messagesPerPage;
+  const currentReceivedMessages = receivedMessages.slice(
+    indexOfFirstMessage,
+    indexOfLastMessage
+  );
+
   function handlePageChange(newPage) {
     setCurrentPage(newPage);
   }
-
-  // Get the slice of messages for the current page
-  const indexOfLastMessage = currentPage * messagesPerPage;
-  const indexOfFirstMessage = indexOfLastMessage - messagesPerPage;
-  const currentReceivedMessages = receivedMessages.slice(indexOfFirstMessage, indexOfLastMessage);
 
   return (
     <div className="MyMessage">
       <h1>Received Messages</h1>
       {currentReceivedMessages.map((message) => (
         <div key={message.id} className="Message">
-          <h2>From: {message.sender_name}</h2>
+          <h3>Item : {message.list.title}</h3>
+          <p>From: {message.sender.name}</p>
           <p>{message.content}</p>
           <button onClick={() => handleReplyClick(message)}>Reply</button>
+          <button className="deleteButton" onClick={() => handleDeleteClick(message.id)}>Delete</button>
         </div>
       ))}
 
@@ -81,8 +97,10 @@ function MyMessage() {
       <h1>Sent Messages</h1>
       {sentMessages.map((message) => (
         <div key={message.id} className="Message">
-          <h2>To: {message.receiver_name}</h2>
+          <h3>Item : {message.list.title}</h3>
+          <p>To : {message.receiver.name}</p>
           <p>{message.content}</p>
+          <button className="deleteButton" onClick={() => handleDeleteClick(message.id)}>Delete</button>
         </div>
       ))}
     </div>

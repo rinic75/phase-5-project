@@ -8,7 +8,8 @@ function Frontpage() {
 
   return (
     <div className="container">
-    <h1>To get started and have the opportunity to meet our fantastic golf pros and make an appointment, we kindly invite you to create an account with us. If you've already created an account, simply login!</h1>
+    <h1>Where Golf Enthusiasts Connect and Swing into Great Deals!</h1>
+    <h3>To get started, we kindly invite you to create an account with us. If you've already created an account, simply login!</h3>
     <Signup setUser={setUser} />
     <Login setUser={setUser} />
   </div>
