@@ -24,7 +24,11 @@ function ListingPage() {
     console.log(selectedListing)
     const {title, id, user_id } = selectedListing;
     console.log(title, id, user_id) 
-    navigate('/mymessages', {state: {title, id, user_id}})
+    navigate('/sendmessages', {state: {
+      title: `Item :  ${title}`, 
+      id, 
+      user_id
+    }})
   }
     
   const openModal = (listing) => {

@@ -76,7 +76,7 @@ function NewListing({ categories }) {
       )}
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="title">Title</label>
+          <label htmlFor="title">Title : </label>
           <input
             type="text"
             id="title"
@@ -86,7 +86,7 @@ function NewListing({ categories }) {
           />
         </div>
         <div>
-          <label htmlFor="description">Description</label>
+          <label htmlFor="description">Description : </label>
           <input
             type="text"
             id="description"
@@ -96,7 +96,7 @@ function NewListing({ categories }) {
           />
         </div>
         <div>
-          <label htmlFor="price">Price</label>
+          <label htmlFor="price">Price : </label>
           <input
             type="text"
             id="price"
@@ -106,7 +106,7 @@ function NewListing({ categories }) {
           />
         </div>
         <div>
-          <label htmlFor="image">Image</label>
+          <label htmlFor="image">Image : </label>
           <input
             type="text"
             id="image"
@@ -116,7 +116,7 @@ function NewListing({ categories }) {
           />
         </div>
         <div>
-          <label htmlFor="category_id">Category</label>
+          <label htmlFor="category_id">Category : </label>
           <select
             id="category_id"
             name="category_id"

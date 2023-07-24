@@ -3,13 +3,14 @@ import { useLocation } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import { useContext } from "react";
 
-function MyMessage() {
+function SendMessage() {
   const { user, setUser } = useContext(UserContext);
   const location = useLocation();
   const { title, id, user_id } = location.state || {}; // Destructure the state object, set defaults to empty object
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState([]);
-  console.log(title, id, user_id, user.id);
+  console.log( id, `receiver_id: ${user_id}`, user.id);
+
   function handleSubmit(e) {
     e.preventDefault();
     const messageData = {
@@ -54,7 +55,7 @@ function MyMessage() {
       <h1>Send Message</h1>
       <h2>{title}</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="message">Message</label>
+        <label htmlFor="message"></label>
         <textarea
           id="message"
           value={message}
@@ -76,4 +77,4 @@ function MyMessage() {
   );
 }
 
-export default MyMessage;
+export default SendMessage;

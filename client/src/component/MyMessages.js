@@ -1,118 +1,90 @@
 import React, { useEffect, useState, useContext } from "react";
-import "../css/MyMessage.css";
-import Modal from "react-modal";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
-
+import "../css/MyMessage.css";
 
 function MyMessage() {
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+  const messagesPerPage = 5; // Number of messages to display per page
   const [receivedMessages, setReceivedMessages] = useState([]);
   const [sentMessages, setSentMessages] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedMessage, setSelectedMessage] = useState(null);
-  const [replyMessage, setReplyMessage] = useState("");
-  
-  console.log(user)
-  console.log(receivedMessages)
-  console.log(sentMessages)
-  
-  useEffect(() => {
-    fetch(`/users/${user.id}/receivedMessages`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch received messages");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setReceivedMessages(data);
-      })
-      .catch((error) => console.error(error));
+  // const [selectedMessage, setSelectedMessage] = useState(null);
+  // const [replyMessage, setReplyMessage] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-    fetch(`/users/${user.id}/sentMessages`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch sent messages");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setSentMessages(data);
-      })
-      .catch((error) => console.error(error));
+  useEffect(() => {
+    fetchMessages(`/users/${user.id}/receivedMessages`, setReceivedMessages);
+    fetchMessages(`/users/${user.id}/sentMessages`, setSentMessages);
   }, [user.id]);
 
+  async function fetchMessages(url, setMessages) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Failed to fetch messages");
+      }
+      const data = await response.json();
+      setMessages(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   function handleReplyClick(message) {
-    setSelectedMessage(message);
-    setReplyMessage("");
-    setShowModal(true);
-  }
+    // setSelectedMessage(message);
+    // setReplyMessage("");
+    console.log(message)
 
-  function handleModalClose() {
-    setSelectedMessage(null);
-    setShowModal(false);
-  }
-
-  function handleSendReply() {
-    // Create a new message with the sender_id and receiver_id switched
-    const newMessage = {
-      text: replyMessage,
-      sender_id: selectedMessage.receiver_id,
-      receiver_id: selectedMessage.sender_id,
-    };
-
-    fetch(`/users/${user.id}/messages`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    navigate("/sendmessages", {
+      state: {
+        title: `Received Message: ${message.content}`,
+        id: message.list_id,
+        user_id: message.sender_id,
       },
-      body: JSON.stringify({ message: newMessage }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to create a new message");
-        }
-        return response.json();
-      })
-      .then((createdMessage) => {
-        console.log(createdMessage);
-        // Perform actions with the created message if needed
-        setSelectedMessage(null);
-        setShowModal(false);
-      })
-      .catch((error) => console.error(error));
+    });
   }
+
+  // Calculate the total number of pages based on the messages array length and messagesPerPage
+  const totalPages = Math.ceil(receivedMessages.length / messagesPerPage);
+
+  // Function to handle page change
+  function handlePageChange(newPage) {
+    setCurrentPage(newPage);
+  }
+
+  // Get the slice of messages for the current page
+  const indexOfLastMessage = currentPage * messagesPerPage;
+  const indexOfFirstMessage = indexOfLastMessage - messagesPerPage;
+  const currentReceivedMessages = receivedMessages.slice(indexOfFirstMessage, indexOfLastMessage);
 
   return (
     <div className="MyMessage">
       <h1>Received Messages</h1>
-      {receivedMessages.map((message) => (
+      {currentReceivedMessages.map((message) => (
         <div key={message.id} className="Message">
           <h2>From: {message.sender_name}</h2>
-          <p>{message.list_title}</p>
+          <p>{message.content}</p>
           <button onClick={() => handleReplyClick(message)}>Reply</button>
         </div>
       ))}
+
+      {/* Pagination */}
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+          <button key={pageNum} onClick={() => handlePageChange(pageNum)}>
+            {pageNum}
+          </button>
+        ))}
+      </div>
 
       <h1>Sent Messages</h1>
       {sentMessages.map((message) => (
         <div key={message.id} className="Message">
           <h2>To: {message.receiver_name}</h2>
-          <p>{message.list_title}</p>
+          <p>{message.content}</p>
         </div>
       ))}
-
-      {showModal && (
-        <Modal onClose={handleModalClose}>
-          <h2>Compose Reply</h2>
-          <textarea
-            value={replyMessage}
-            onChange={(e) => setReplyMessage(e.target.value)}
-            placeholder="Write your reply..."
-          />
-          <button onClick={handleSendReply}>Send</button>
-        </Modal>
-      )}
     </div>
   );
 }

@@ -7,8 +7,9 @@
 .Message {
   border: 1px solid #ccc;
   background-color: #f9f9f9;
-  margin-bottom: 20px;
-  padding: 20px;
+  margin-bottom: 10px;
+  padding: 5px;
+  /* Remove the max-height and overflow-y properties to display all messages */
 }
 
 h1 {
@@ -37,50 +38,28 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* Modal styles */
-.Modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+.pagination {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  z-index: 9999;
 }
 
-.ModalContent {
-  background-color: #fff;
-  padding: 20px;
-  max-width: 500px;
-  width: 100%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.Modal h2 {
-  margin-bottom: 10px;
-}
-
-.Modal textarea {
-  width: 100%;
-  height: 150px;
-  padding: 10px;
-  resize: vertical;
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
-}
-
-.Modal button {
+.pagination button {
+  font-size: 16px;
   padding: 8px 12px;
-  font-size: 14px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  color: #333;
   cursor: pointer;
 }
 
-.Modal button:hover {
-  background-color: #0056b3;
+.pagination button:hover {
+  background-color: #e0e0e0;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: #fff;
 }

@@ -1,13 +1,12 @@
-
-
-/* Form elements */
 form {
   display: flex;
   flex-direction: column;
+  align-items: center; /* Center align form content horizontally */
 }
 
 label {
   margin-bottom: 5px;
+  width: 150px; /* Adjust the width of the labels as needed */
 }
 
 input,
@@ -16,11 +15,26 @@ select {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: 300px; /* Set a fixed width for the input elements */
+  box-sizing: border-box; /* Include padding and border within the specified width */
+}
+
+/* Description textarea */
+textarea {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 500px; /* Set a fixed width for the textarea */
+  height: 100px; /* Set a specific height for the textarea */
+  resize: vertical; /* Allow vertical resizing if needed */
+  box-sizing: border-box; /* Include padding and border within the specified width and height */
 }
 
 /* Add some extra styling when inputs are focused */
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   border-color: #007bff;
   outline: none;
 }
@@ -33,6 +47,7 @@ button[type="submit"] {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  width: 150px; /* Adjust the width of the button as needed */
 }
 
 /* Add some extra styling when the button is hovered */
