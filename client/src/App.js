@@ -11,7 +11,8 @@ import MyListings from './component/MyListings';
 import EditListing from './component/EditListing';
 import NewListing from './component/NewListing';
 import Frontpage from './component/FrontPage';
-import MyMessage from './component/MyMessage';
+import SendMessage from './component/SendMessage';
+import MyMessages from './component/MyMessages';
 
 
 
@@ -39,7 +40,8 @@ function App() {
         <Route exact path="/mylistings" element={<MyListings />} />
         <Route exact path="/editListing/:id" element={<EditListing categories={categories}/>} />
         <Route exact path="/newlisting" element={<NewListing categories={categories}/>} />
-        <Route exact path="/mymessages" element={<MyMessage />} />
+        <Route exact path="/sendmessages" element={<SendMessage />} />
+        <Route exact path="/mymessages" element={<MyMessages />} />
       </Routes>
     </div>
   );

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import { useContext } from "react";
 
 function EditListing({ categories }) {
+  const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -21,18 +22,26 @@ function EditListing({ categories }) {
   const { id } = useParams();
 
   useEffect(() => {
+    let isMounted = true; // Introduce a flag to track if the component is still mounted
+  
     fetch(`/lists/${id}`)
       .then((r) => r.json())
       .then((data) => {
-        setListing(data);
-        setTitle(data.title || "");
-        setDescription(data.description || "");
-        setPrice(data.price || "");
-        setImage(data.image || "");
-        setCategory_id(data.category_id || "");
+        if (isMounted) { // Check if the component is still mounted before updating the state
+          setListing(data);
+          setTitle(data.title || "");
+          setDescription(data.description || "");
+          setPrice(data.price || "");
+          setImage(data.image || "");
+          setCategory_id(data.category_id || "");
+        }
       });
+  
+    return () => {
+      isMounted = false; // Clean up the flag when the component unmounts
+    };
   }, [id]);
-
+  
   function handleSubmit(e) {
     e.preventDefault();
     const listingData = {
@@ -52,18 +61,19 @@ function EditListing({ categories }) {
       if (r.ok) {
         r.json().then((listing) => {
           setListing(listing);
-          if (user && user.listings) {
-            const updatedListings = user.listings.map((l) => {
-              if (l.id === listing.id) return listing;
-              return l;
-            });
-            const updatedUser = { ...user, listings: updatedListings };
-            setUser(updatedUser);
-          }
+          const updatedLists = user.lists.map((l) => {
+            if (l.id === listing.id) return listing;
+            return l;
+          });
+          setUser((prevUser) => ({
+            ...prevUser,
+            lists: updatedLists,
+          }));
         });
       } else {
         r.json().then((err) => setErrors(err.errors));
       }
+      navigate(`/mylistings`);
     });
   }
 

@@ -9,15 +9,13 @@ function MyMessage() {
   const { title, id, user_id } = location.state || {}; // Destructure the state object, set defaults to empty object
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState([]);
-
-  function handleSubmit() {
-    const sender_id = user.id;
-    const receiver_id = user_id;
-    const list_id = id;
+  console.log(title, id, user_id, user.id);
+  function handleSubmit(e) {
+    e.preventDefault();
     const messageData = {
-      sender_id,
-      receiver_id,
-      list_id,
+      sender_id: user.id,
+      receiver_id: user_id,
+      list_id: id,
       content: message,
     };
 

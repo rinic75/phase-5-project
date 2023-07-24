@@ -1,6 +1,5 @@
 class MessagesController < ApplicationController
-  before_action :set_user, only: [:show, :create]
-
+  
   def index
     messages = Message.all
     render json: messages

@@ -25,7 +25,25 @@ class UsersController < ApplicationController
 
   def show 
     user = User.find_by(id: params[:id])
-    render json: user.lists, include: :messages
+    messages = Message.where(receiver_id: user.id)
+    data = {
+      lists: user.lists,
+      messages: messages
+    }
+  
+    render json: data
+  end
+
+  def received_messages
+    current_user_id = params[:user_id]
+    received_messages = Message.where(receiver_id: current_user_id)
+    render json: received_messages
+  end
+
+  def sent_messages
+    user_id = params[:user_id]
+    @sent_messages = Message.where(sender_id: user_id)
+    render json: @sent_messages
   end
 
   private

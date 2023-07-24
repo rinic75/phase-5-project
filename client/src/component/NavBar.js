@@ -50,13 +50,13 @@ function NavBar() {
               </NavLink>
             </li>
             <li>
-              {/* <NavLink
+              <NavLink
                 to="/mymessages"
                 className="navbar__link"
                 // activeClassName="active"
               >
                 My Messages
-              </NavLink> */}
+              </NavLink>
             </li>
           </ul>
           <button className="navbar__logout" onClick={handleLogout}>
