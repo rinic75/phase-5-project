@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import CategoryChart from "./CategoryChart";
 import "../css/Home.css"; // Import the CSS file
 
 function Home({ categories }) {
@@ -18,7 +19,13 @@ function Home({ categories }) {
           </h2>
         </div>
       ))}
+      <div className="ChartBox">
+        <h1>List Data</h1>
+        <CategoryChart />
+      </div>
+
     </div>
+    
   );
 }
 

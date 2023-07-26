@@ -65,7 +65,7 @@ function NavBar() {
         </>
       ) : (
         <div>
-          <h2 className="navbar__welcome">Golflists</h2>
+          <h2 className="navbar__welcome">GolfClubLists</h2>
         </div>
       )}
     </nav>

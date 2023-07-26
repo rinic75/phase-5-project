@@ -8,8 +8,8 @@
 
 /* Individual category box */
 .CategoryBox {
-  width: 200px;
-  height: 200px; /* Make the width and height the same to create a square shape */
+  width: 120px; /* Reduce the width of the category box */
+  height: 120px; /* Make the width and height the same to create a square shape */
   padding: 10px;
   margin: 10px;
   border: 1px solid #ccc;
@@ -20,10 +20,10 @@
 }
 
 .CategoryImage {
-  width: 120px; /* Increase the size of the image */
-  height: 120px; /* Increase the size of the image */
+  width: 80px; /* Reduce the size of the image */
+  height: 80px; /* Reduce the size of the image */
   border-radius: 50%;
-  margin: 30px auto 10px; /* Adjust margins to center the image vertically */
+  margin: 20px auto 5px; /* Adjust margins to center the image vertically */
   overflow: hidden;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .CategoryName {
-  font-size: 18px;
+  font-size: 14px; /* Reduce the font size of the category name */
   font-weight: bold;
   color: #333;
 }
