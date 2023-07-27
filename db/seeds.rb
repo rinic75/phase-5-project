@@ -29,7 +29,7 @@ User.create(name: "Chang", email: "chang@gmail.com", password: "1234", zipcode: 
 end
 
 # List.create(title: "John's List", description:"descriptiton", image:"empty", price: "100" user_id: User.first.id) - list faker instead 20 times
-30.times do
+40.times do
   List.create(title: Faker::Commerce.product_name, description: Faker::Lorem.paragraph, image: Faker::LoremFlickr.image, price: Faker::Commerce.price, user_id: User.all.sample.id, category_id: Category.all.sample.id)
 end
 
